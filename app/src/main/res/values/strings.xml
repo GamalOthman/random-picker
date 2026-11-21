@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Random Picker</string>
+    <string name="default_list_name">My list</string>
+    <string name="tap_to_switch">Tap to switch list</string>
+    <string name="tap_pick">Tap Pick!</string>
+    <string name="pick">Pick</string>
+    <string name="no_repeat">No repeat</string>
+    <string name="reset">Reset</string>
+    <string name="add">Add</string>
+    <string name="add_hint">Add item (use commas for several)</string>
+    <string name="empty_hint">This list is empty.\nAdd some items above.</string>
+    <string name="add_items_first">Add some items first</string>
+    <string name="all_picked">All items have been picked. Reset the list?</string>
+    <string name="choose_list">Lists</string>
+    <string name="new_list">New list</string>
+    <string name="rename_list">Rename list</string>
+    <string name="delete_list">Delete list</string>
+    <string name="delete_list_confirm">Delete the list \"%1$s\"?</string>
+    <string name="clear_items">Clear all items</string>
+    <string name="clear_items_confirm">Remove all items from this list?</string>
+    <string name="clear">Clear</string>
+    <string name="delete">Delete</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="count_left">%1$d of %2$d left · tap an item to mark it</string>
+    <plurals name="count_items">
+        <item quantity="one">%d item</item>
+        <item quantity="other">%d items</item>
+    </plurals>
+</resources>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Follows the phone's light/dark mode; uses wallpaper colors on Android 12+ -->
+    <style name="Theme.RandomPicker" parent="Theme.Material3.DayNight.NoActionBar">
+    </style>
+</resources>
