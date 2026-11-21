@@ -9,7 +9,7 @@
     <string name="reset">Reset</string>
     <string name="add">Add</string>
     <string name="add_hint">Add item (use commas for several)</string>
-    <string name="empty_hint">This list is empty.\nAdd some items above.</string>
+    <string name="empty_hint">This list is empty.\nAdd some items above.\nLong-press an item to edit it.</string>
     <string name="add_items_first">Add some items first</string>
     <string name="all_picked">All items have been picked. Reset the list?</string>
     <string name="choose_list">Lists</string>
@@ -28,4 +28,9 @@
         <item quantity="one">%d item</item>
         <item quantity="other">%d items</item>
     </plurals>
+    <string name="language">Language</string>
+    <string name="lang_default">Phone default</string>
+    <string name="edit_item">Edit item</string>
+    <string name="item_deleted">Item deleted</string>
+    <string name="undo">Undo</string>
 </resources>

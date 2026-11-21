@@ -11,6 +11,8 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.os.LocaleListCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.MaterialToolbar
@@ -18,6 +20,7 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.color.DynamicColors
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.materialswitch.MaterialSwitch
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import kotlin.random.Random
 
@@ -57,11 +60,8 @@ class MainActivity : AppCompatActivity() {
 
         adapter = ItemAdapter(
             getItems = { store.currentList.items },
-            onDelete = { pos ->
-                store.currentList.items.removeAt(pos)
-                adapter.notifyItemRemoved(pos)
-                saveAndRefresh()
-            },
+            onDelete = { pos -> deleteItem(pos) },
+            onLongPress = { pos -> editItem(pos) },
             onTap = { pos ->
                 // Tap an item to mark/unmark it as already picked
                 val item = store.currentList.items[pos]
@@ -106,6 +106,35 @@ class MainActivity : AppCompatActivity() {
         adapter.notifyItemRangeInserted(start, parts.size)
         input.setText("")
         saveAndRefresh()
+    }
+
+    private fun deleteItem(pos: Int) {
+        if (spinning) return
+        val list = store.currentList
+        val removed = list.items.removeAt(pos)
+        adapter.notifyItemRemoved(pos)
+        saveAndRefresh()
+        Snackbar.make(findViewById(android.R.id.content), R.string.item_deleted, Snackbar.LENGTH_LONG)
+            .setAction(R.string.undo) {
+                // Put it back only if the same list is still shown
+                if (store.currentList === list) {
+                    val at = pos.coerceAtMost(list.items.size)
+                    list.items.add(at, removed)
+                    adapter.notifyItemInserted(at)
+                    saveAndRefresh()
+                }
+            }
+            .show()
+    }
+
+    private fun editItem(pos: Int) {
+        if (spinning) return
+        val item = store.currentList.items[pos]
+        askName(R.string.edit_item, item.text) { text ->
+            item.text = text
+            adapter.notifyDataSetChanged()
+            saveAndRefresh()
+        }
     }
 
     private fun resetUsed() {
@@ -248,6 +277,23 @@ class MainActivity : AppCompatActivity() {
             .show()
     }
 
+    // ---------- language ----------
+
+    private fun chooseLanguage() {
+        val tags = arrayOf("", "en", "ar")
+        val labels = arrayOf(getString(R.string.lang_default), "English", "العربية")
+        val now = AppCompatDelegate.getApplicationLocales().toLanguageTags()
+        val selected = tags.indexOfFirst { it.isNotEmpty() && now.startsWith(it) }.let { if (it < 0) 0 else it }
+        MaterialAlertDialogBuilder(this)
+            .setTitle(R.string.language)
+            .setSingleChoiceItems(labels, selected) { d, which ->
+                d.dismiss()
+                AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags(tags[which]))
+            }
+            .setNegativeButton(R.string.cancel, null)
+            .show()
+    }
+
     // ---------- menu ----------
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -262,6 +308,7 @@ class MainActivity : AppCompatActivity() {
             R.id.action_rename -> renameList()
             R.id.action_delete -> deleteList()
             R.id.action_clear -> clearItems()
+            R.id.action_language -> chooseLanguage()
             else -> return super.onOptionsItemSelected(item)
         }
         return true
@@ -276,6 +323,7 @@ class MainActivity : AppCompatActivity() {
         toolbar.title = list.name
         val total = list.items.size
         val left = list.items.count { !it.used }
+        countText.visibility = if (total == 0) android.view.View.GONE else android.view.View.VISIBLE
         countText.text = if (store.noRepeat)
             getString(R.string.count_left, left, total)
         else

@@ -9,7 +9,7 @@
     <string name="reset">إعادة</string>
     <string name="add">إضافة</string>
     <string name="add_hint">أضف عنصرًا (افصل بفاصلة لأكثر من عنصر)</string>
-    <string name="empty_hint">القائمة فارغة.\nأضف عناصر من الأعلى.</string>
+    <string name="empty_hint">القائمة فارغة.\nأضف عناصر من الأعلى.\nاضغط مطولًا على عنصر لتعديله.</string>
     <string name="add_items_first">أضف بعض العناصر أولًا</string>
     <string name="all_picked">تم اختيار كل العناصر. هل تريد إعادة القائمة؟</string>
     <string name="choose_list">القوائم</string>
@@ -32,4 +32,9 @@
         <item quantity="many">%d عنصرًا</item>
         <item quantity="other">%d عنصر</item>
     </plurals>
+    <string name="language">اللغة</string>
+    <string name="lang_default">لغة الهاتف</string>
+    <string name="edit_item">تعديل العنصر</string>
+    <string name="item_deleted">تم حذف العنصر</string>
+    <string name="undo">تراجع</string>
 </resources>

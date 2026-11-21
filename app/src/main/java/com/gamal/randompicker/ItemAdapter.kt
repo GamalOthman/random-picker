@@ -12,6 +12,7 @@ class ItemAdapter(
     private val getItems: () -> List<Item>,
     private val onDelete: (Int) -> Unit,
     private val onTap: (Int) -> Unit,
+    private val onLongPress: (Int) -> Unit,
 ) : RecyclerView.Adapter<ItemAdapter.VH>() {
 
     class VH(v: View) : RecyclerView.ViewHolder(v) {
@@ -39,6 +40,11 @@ class ItemAdapter(
         h.itemView.setOnClickListener {
             val p = h.bindingAdapterPosition
             if (p != RecyclerView.NO_POSITION) onTap(p)
+        }
+        h.itemView.setOnLongClickListener {
+            val p = h.bindingAdapterPosition
+            if (p != RecyclerView.NO_POSITION) onLongPress(p)
+            true
         }
     }
 }
